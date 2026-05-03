@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kenmac Fruits — Know Your Farmer. Trust Your Food.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #1a3d2b;
+    --green-mid: #2d6a4f;
+    --green-fresh: #52b788;
+    --green-light: #b7e4c7;
+    --earth: #8B6914;
+    --earth-light: #d4a843;
+    --cream: #faf7f2;
+    --warm-white: #ffffff;
+    --charcoal: #1c1c1c;
+    --muted: #6b7280;
+    --border: rgba(26,61,43,0.12);
+    --shadow: 0 4px 32px rgba(26,61,43,0.10);
+    --radius: 16px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(250,247,242,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--green-mid), var(--green-fresh));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .nav-logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--green-deep);
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none; color: var(--charcoal);
+    font-size: 14px; font-weight: 500; letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green-mid); }
+  .nav-cta {
+    display: flex; gap: 12px; align-items: center;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 24px; border-radius: 100px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: all 0.2s ease; letter-spacing: 0.01em;
+  }
+  .btn-outline {
+    background: transparent; color: var(--green-deep);
+    border: 1.5px solid var(--green-deep);
+  }
+  .btn-outline:hover { background: var(--green-deep); color: white; }
+  .btn-primary {
+    background: var(--green-deep); color: white;
+  }
+  .btn-primary:hover {
+    background: var(--green-mid);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(26,61,43,0.3);
+  }
+  .btn-gold {
+    background: linear-gradient(135deg, var(--earth), var(--earth-light));
+    color: white;
+  }
+  .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(139,105,20,0.35); }
+  .btn-lg { padding: 16px 36px; font-size: 16px; }
+  .btn-sm { padding: 9px 20px; font-size: 13px; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 140px 60px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #0f2419 0%, #1a3d2b 40%, #2d6a4f 100%);
+  }
+  .hero-pattern {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0);
+    background-size: 40px 40px;
+  }
+  .hero-orbs {
+    position: absolute; inset: 0; overflow: hidden;
+  }
+  .orb {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle, rgba(82,183,136,0.25) 0%, transparent 70%);
+  }
+  .orb1 { width: 600px; height: 600px; top: -100px; right: -100px; }
+  .orb2 { width: 400px; height: 400px; bottom: -50px; left: 200px; background: radial-gradient(circle, rgba(212,168,67,0.15) 0%, transparent 70%); }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 700px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 18px; border-radius: 100px;
+    background: rgba(82,183,136,0.15); border: 1px solid rgba(82,183,136,0.3);
+    color: var(--green-light); font-size: 13px; font-weight: 500;
+    margin-bottom: 32px; letter-spacing: 0.05em; text-transform: uppercase;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-badge span { font-size: 16px; }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 6vw, 76px); line-height: 1.08;
+    color: white; font-weight: 700; margin-bottom: 24px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  .hero h1 em { font-style: italic; color: var(--green-fresh); }
+  .hero p {
+    font-size: 18px; color: rgba(255,255,255,0.72); line-height: 1.7;
+    max-width: 540px; margin-bottom: 44px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .hero-ctas {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-trust {
+    position: relative; z-index: 2;
+    display: flex; gap: 40px; margin-top: 80px;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+  .hero-trust-item {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .hero-trust-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; font-weight: 700; color: white;
+  }
+  .hero-trust-label {
+    font-size: 13px; color: rgba(255,255,255,0.55); font-weight: 400;
+  }
+  .hero-visual {
+    position: absolute; right: 60px; top: 50%; transform: translateY(-50%);
+    width: 420px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    animation: fadeUp 0.8s 0.2s ease both;
+    z-index: 2;
+  }
+  .hero-card {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px; padding: 24px;
+    backdrop-filter: blur(10px);
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .hero-card:first-child { grid-column: span 2; }
+  .hero-card-emoji { font-size: 36px; }
+  .hero-card-title { color: white; font-weight: 600; font-size: 16px; }
+  .hero-card-sub { color: rgba(255,255,255,0.55); font-size: 13px; line-height: 1.5; }
+  .hero-card-tag {
+    display: inline-flex; padding: 4px 10px; border-radius: 100px;
+    background: rgba(82,183,136,0.2); color: var(--green-light);
+    font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+    align-self: flex-start;
+  }
+
+  /* ─── SECTIONS COMMON ─── */
+  section { padding: 100px 60px; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--green-mid); margin-bottom: 16px;
+  }
+  .section-tag::before { content: ''; width: 24px; height: 2px; background: var(--green-mid); }
+  h2.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px); font-weight: 700;
+    line-height: 1.15; color: var(--green-deep); margin-bottom: 20px;
+  }
+  h2.section-title em { font-style: italic; color: var(--green-mid); }
+  .section-sub {
+    font-size: 17px; color: var(--muted); line-height: 1.7;
+    max-width: 560px;
+  }
+
+  /* ─── CAROUSEL ─── */
+  .carousel-section {
+    background: white; padding: 80px 0;
+    overflow: hidden;
+  }
+  .carousel-header {
+    padding: 0 60px; margin-bottom: 48px;
+  }
+  .carousel-track {
+    display: flex; gap: 24px;
+    animation: scroll 30s linear infinite;
+    width: max-content;
+  }
+  .carousel-track:hover { animation-play-state: paused; }
+  .carousel-item {
+    width: 260px; height: 320px; border-radius: 20px; overflow: hidden;
+    position: relative; flex-shrink: 0;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .carousel-item:hover { transform: translateY(-8px); }
+  .carousel-item-bg {
+    width: 100%; height: 220px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px;
+  }
+  .carousel-item-info { padding: 16px 20px; }
+  .carousel-item-name { font-weight: 600; font-size: 16px; color: var(--green-deep); }
+  .carousel-item-origin { font-size: 13px; color: var(--muted); margin: 4px 0; }
+  .carousel-item-price { font-weight: 700; font-size: 18px; color: var(--green-mid); }
+  .carousel-item-cert {
+    position: absolute; top: 12px; right: 12px;
+    background: white; border-radius: 100px; padding: 4px 10px;
+    font-size: 11px; font-weight: 600; color: var(--green-mid);
+    border: 1.5px solid var(--green-light);
+  }
+
+  /* ─── FARMER PROFILES ─── */
+  .farmers-section { background: var(--green-deep); }
+  .farmers-section .section-tag { color: var(--green-light); }
+  .farmers-section .section-tag::before { background: var(--green-light); }
+  .farmers-section h2.section-title { color: white; }
+  .farmers-section h2.section-title em { color: var(--green-fresh); }
+  .farmers-section .section-sub { color: rgba(255,255,255,0.6); }
+  .farmers-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    margin-top: 60px;
+  }
+  .farmer-card {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px; overflow: hidden;
+    transition: all 0.3s ease; cursor: pointer;
+  }
+  .farmer-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
+  .farmer-card-img {
+    height: 220px; display: flex; align-items: center; justify-content: center;
+    font-size: 80px; background: rgba(82,183,136,0.1);
+    position: relative;
+  }
+  .farmer-video-btn {
+    position: absolute; bottom: 16px; right: 16px;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: white; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    cursor: pointer; transition: transform 0.2s;
+  }
+  .farmer-video-btn:hover { transform: scale(1.1); }
+  .farmer-card-body { padding: 24px; }
+  .farmer-card-name { font-family: 'Playfair Display', serif; font-size: 20px; color: white; font-weight: 600; }
+  .farmer-card-location { font-size: 13px; color: var(--green-light); margin: 6px 0 12px; display: flex; align-items: center; gap: 4px; }
+  .farmer-card-story { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 20px; }
+  .farmer-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .farmer-tag {
+    padding: 4px 12px; border-radius: 100px; font-size: 12px; font-weight: 500;
+    background: rgba(82,183,136,0.15); color: var(--green-light);
+    border: 1px solid rgba(82,183,136,0.25);
+  }
+
+  /* ─── TRUST / QR ─── */
+  .trust-section { background: var(--cream); }
+  .trust-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
+  .trust-visual {
+    background: white; border-radius: 28px; padding: 48px;
+    box-shadow: var(--shadow); border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .trust-visual::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--green-fresh), var(--earth-light));
+  }
+  .qr-demo {
+    width: 120px; height: 120px; background: var(--green-deep); border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 60px; margin-bottom: 24px;
+  }
+  .trust-info-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 0; border-bottom: 1px solid var(--border);
+  }
+  .trust-info-row:last-child { border-bottom: none; }
+  .trust-info-label { font-size: 13px; color: var(--muted); font-weight: 500; }
+  .trust-info-val { font-size: 14px; color: var(--green-deep); font-weight: 600; }
+  .trust-features { display: flex; flex-direction: column; gap: 32px; }
+  .trust-feature { display: flex; gap: 20px; align-items: flex-start; }
+  .trust-feature-icon {
+    width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--green-light), rgba(82,183,136,0.3));
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+  }
+  .trust-feature h4 { font-size: 17px; font-weight: 600; color: var(--green-deep); margin-bottom: 6px; }
+  .trust-feature p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* ─── MARKETPLACE PREVIEW ─── */
+  .marketplace-section { background: white; }
+  .filters-bar {
+    display: flex; gap: 12px; flex-wrap: wrap; margin: 40px 0 32px;
+  }
+  .filter-pill {
+    padding: 9px 20px; border-radius: 100px; font-size: 13px; font-weight: 500;
+    border: 1.5px solid var(--border); background: white; color: var(--muted);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .filter-pill:hover, .filter-pill.active {
+    background: var(--green-deep); border-color: var(--green-deep); color: white;
+  }
+  .products-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+  }
+  .product-card {
+    background: var(--cream); border-radius: 20px; overflow: hidden;
+    border: 1px solid var(--border); transition: all 0.3s ease; cursor: pointer;
+  }
+  .product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+  .product-card-img {
+    height: 200px; display: flex; align-items: center; justify-content: center;
+    font-size: 72px; background: white; position: relative;
+  }
+  .product-badge {
+    position: absolute; top: 12px; left: 12px;
+    padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600;
+    background: var(--green-deep); color: white; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .product-card-body { padding: 20px; }
+  .product-card-name { font-weight: 700; font-size: 17px; color: var(--green-deep); margin-bottom: 4px; }
+  .product-card-farmer { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 4px; }
+  .product-card-footer { display: flex; justify-content: space-between; align-items: center; }
+  .product-price { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--green-mid); }
+  .product-price span { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 400; color: var(--muted); }
+  .add-btn {
+    width: 38px; height: 38px; border-radius: 50%; background: var(--green-deep);
+    border: none; color: white; font-size: 20px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .add-btn:hover { background: var(--green-mid); transform: scale(1.1); }
+
+  /* ─── SUBSCRIPTION ─── */
+  .subscription-section {
+    background: linear-gradient(135deg, #faf7f2 0%, #f0ede6 100%);
+  }
+  .subscription-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 60px; }
+  .sub-card {
+    background: white; border-radius: 24px; padding: 40px 36px;
+    border: 2px solid var(--border); position: relative;
+    transition: all 0.3s ease; cursor: pointer;
+  }
+  .sub-card:hover { border-color: var(--green-mid); transform: translateY(-4px); box-shadow: var(--shadow); }
+  .sub-card.featured { border-color: var(--green-deep); background: var(--green-deep); }
+  .featured-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: var(--earth); color: white; padding: 5px 20px; border-radius: 100px;
+    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;
+  }
+  .sub-icon { font-size: 48px; margin-bottom: 20px; }
+  .sub-name { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--green-deep); margin-bottom: 8px; }
+  .sub-card.featured .sub-name { color: white; }
+  .sub-price { font-size: 40px; font-weight: 700; color: var(--green-mid); margin-bottom: 4px; }
+  .sub-card.featured .sub-price { color: var(--green-light); }
+  .sub-price span { font-size: 16px; font-weight: 400; color: var(--muted); }
+  .sub-card.featured .sub-price span { color: rgba(255,255,255,0.5); }
+  .sub-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 16px 0 24px; }
+  .sub-card.featured .sub-desc { color: rgba(255,255,255,0.6); }
+  .sub-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+  .sub-features li { font-size: 14px; color: var(--charcoal); display: flex; gap: 10px; }
+  .sub-card.featured .sub-features li { color: rgba(255,255,255,0.85); }
+  .sub-features li::before { content: '✓'; color: var(--green-mid); font-weight: 700; }
+  .sub-card.featured .sub-features li::before { color: var(--green-fresh); }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials-section { background: white; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 60px; }
+  .testimonial-card {
+    background: var(--cream); border-radius: 24px; padding: 36px;
+    border: 1px solid var(--border); transition: all 0.3s;
+  }
+  .testimonial-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .testimonial-stars { color: var(--earth-light); font-size: 16px; margin-bottom: 16px; letter-spacing: 2px; }
+  .testimonial-text { font-size: 15px; line-height: 1.75; color: var(--charcoal); font-style: italic; margin-bottom: 24px; font-family: 'Playfair Display', serif; font-weight: 400; }
+  .testimonial-author { display: flex; align-items: center; gap: 14px; }
+  .testimonial-avatar { width: 48px; height: 48px; border-radius: 50%; font-size: 24px; background: var(--green-light); display: flex; align-items: center; justify-content: center; }
+  .testimonial-name { font-weight: 600; font-size: 15px; color: var(--green-deep); }
+  .testimonial-location { font-size: 13px; color: var(--muted); }
+
+  /* ─── INVESTOR SECTION ─── */
+  .investor-section { background: var(--cream); }
+  .investor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-top: 60px; }
+  .metric-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .metric-card {
+    background: white; border-radius: 20px; padding: 28px;
+    border: 1px solid var(--border); box-shadow: var(--shadow);
+  }
+  .metric-card-num {
+    font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700;
+    color: var(--green-deep); margin-bottom: 6px;
+  }
+  .metric-card-label { font-size: 13px; color: var(--muted); font-weight: 500; line-height: 1.5; }
+  .investor-points { display: flex; flex-direction: column; gap: 28px; }
+  .investor-point { display: flex; gap: 20px; }
+  .investor-point-num {
+    font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500;
+    color: var(--green-fresh); padding-top: 3px; flex-shrink: 0;
+  }
+  .investor-point h4 { font-size: 17px; font-weight: 600; color: var(--green-deep); margin-bottom: 6px; }
+  .investor-point p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* ─── SIGNUP ─── */
+  .signup-section {
+    background: var(--green-deep); padding: 100px 60px;
+    text-align: center;
+  }
+  .signup-section h2 { font-family: 'Playfair Display', serif; font-size: 52px; color: white; font-weight: 700; margin-bottom: 16px; }
+  .signup-section h2 em { font-style: italic; color: var(--green-fresh); }
+  .signup-section p { font-size: 18px; color: rgba(255,255,255,0.65); margin-bottom: 48px; }
+  .signup-form {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    max-width: 560px; margin: 0 auto 24px;
+  }
+  .signup-input {
+    flex: 1; min-width: 200px; padding: 16px 24px; border-radius: 100px;
+    border: 1.5px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.08);
+    color: white; font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none;
+    backdrop-filter: blur(10px);
+    transition: border-color 0.2s;
+  }
+  .signup-input::placeholder { color: rgba(255,255,255,0.4); }
+  .signup-input:focus { border-color: var(--green-fresh); }
+  .signup-disclaimer { font-size: 13px; color: rgba(255,255,255,0.4); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #0f2419; padding: 60px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px;
+  }
+  .footer-brand {}
+  .footer-brand .nav-logo-text { font-size: 22px; color: white; margin-bottom: 16px; display: block; }
+  .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.7; }
+  .footer-col h5 { font-size: 13px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 20px; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-links a { font-size: 14px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--green-fresh); }
+  .footer-bottom {
+    background: #0a1a10; padding: 24px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.3); }
+  .footer-certs { display: flex; gap: 16px; }
+  .cert-badge {
+    padding: 6px 14px; border-radius: 100px; font-size: 11px; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.5);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── PAGE NAV TABS ─── */
+  .page-nav {
+    display: flex; gap: 8px; padding: 16px 60px;
+    background: white; border-bottom: 1px solid var(--border);
+    overflow-x: auto; position: sticky; top: 77px; z-index: 900;
+  }
+  .page-nav::-webkit-scrollbar { display: none; }
+  .page-tab {
+    padding: 8px 20px; border-radius: 100px; white-space: nowrap;
+    font-size: 13px; font-weight: 500; text-decoration: none;
+    color: var(--muted); border: 1.5px solid transparent;
+    transition: all 0.2s; cursor: pointer;
+  }
+  .page-tab:hover { color: var(--green-deep); border-color: var(--border); }
+  .page-tab.active { color: var(--green-deep); border-color: var(--green-deep); background: rgba(26,61,43,0.05); }
+
+  /* Modal */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white; border-radius: 28px; padding: 48px;
+    max-width: 480px; width: 100%; position: relative;
+    animation: fadeUp 0.3s ease;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .modal-close {
+    position: absolute; top: 20px; right: 20px;
+    width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--border);
+    background: white; cursor: pointer; font-size: 18px; color: var(--muted);
+    display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+  }
+  .modal-close:hover { background: var(--cream); color: var(--charcoal); }
+  .modal h3 { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--green-deep); margin-bottom: 8px; }
+  .modal p.modal-sub { font-size: 15px; color: var(--muted); margin-bottom: 32px; }
+  .modal-input {
+    width: 100%; padding: 14px 20px; border-radius: 12px;
+    border: 1.5px solid var(--border); background: var(--cream);
+    font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none;
+    margin-bottom: 16px; transition: border-color 0.2s; color: var(--charcoal);
+  }
+  .modal-input:focus { border-color: var(--green-mid); background: white; }
+  .modal-or { text-align: center; font-size: 13px; color: var(--muted); margin: 8px 0 16px; }
+  .google-btn {
+    width: 100%; padding: 14px; border-radius: 12px;
+    border: 1.5px solid var(--border); background: white;
+    font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: all 0.2s; color: var(--charcoal);
+  }
+  .google-btn:hover { background: var(--cream); }
+  .pref-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+  .pref-tag {
+    padding: 8px 16px; border-radius: 100px; font-size: 13px; font-weight: 500;
+    border: 1.5px solid var(--border); background: white; cursor: pointer;
+    transition: all 0.2s; color: var(--charcoal);
+  }
+  .pref-tag.selected { background: var(--green-deep); border-color: var(--green-deep); color: white; }
+  .modal-step { display: none; }
+  .modal-step.active { display: block; }
+  .success-state { text-align: center; padding: 20px 0; }
+  .success-icon { font-size: 64px; margin-bottom: 16px; }
+
+  /* Dashboard */
+  .dashboard-grid {
+    display: grid; grid-template-columns: 240px 1fr; gap: 0;
+    min-height: 500px; border: 1px solid var(--border); border-radius: 24px; overflow: hidden;
+    margin-top: 40px;
+  }
+  .dashboard-sidebar {
+    background: var(--green-deep); padding: 32px 24px;
+  }
+  .dashboard-sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .dash-nav-item {
+    padding: 12px 16px; border-radius: 12px; font-size: 14px; font-weight: 500;
+    color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .dash-nav-item:hover, .dash-nav-item.active { background: rgba(255,255,255,0.1); color: white; }
+  .dashboard-main { background: var(--cream); padding: 32px; }
+  .dash-header { margin-bottom: 28px; }
+  .dash-header h3 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--green-deep); font-weight: 700; }
+  .dash-header p { font-size: 14px; color: var(--muted); margin-top: 4px; }
+  .dash-stat-row { display: flex; gap: 20px; margin-bottom: 28px; }
+  .dash-stat {
+    flex: 1; background: white; border-radius: 16px; padding: 20px 24px;
+    border: 1px solid var(--border);
+  }
+  .dash-stat-val { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--green-deep); }
+  .dash-stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .dash-order {
+    background: white; border-radius: 16px; padding: 20px 24px;
+    border: 1px solid var(--border); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .dash-order-icon { font-size: 32px; }
+  .dash-order-name { font-weight: 600; font-size: 15px; color: var(--green-deep); }
+  .dash-order-date { font-size: 13px; color: var(--muted); }
+  .dash-order-status {
+    margin-left: auto; padding: 6px 14px; border-radius: 100px;
+    font-size: 12px; font-weight: 600; background: var(--green-light); color: var(--green-deep);
+  }
+
+  /* Section visibility */
+  .page-section { display: none; }
+  .page-section.visible { display: block; }
+
+  @media (max-width: 1200px) {
+    .hero-visual { display: none; }
+    .products-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 60px 24px; }
+    .hero { padding: 120px 24px 60px; }
+    .farmers-grid, .testimonials-grid, .subscription-grid { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
+    .trust-grid, .investor-grid { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo" onclick="showSection('home')">
+    <div class="nav-logo-icon">🌿</div>
+    <span class="nav-logo-text">Kenmac Fruits</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showSection('marketplace')">Marketplace</a></li>
+    <li><a href="#" onclick="showSection('farmers')">Our Farmers</a></li>
+    <li><a href="#" onclick="showSection('subscription')">Subscriptions</a></li>
+    <li><a href="#" onclick="showSection('about')">Our Story</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a class="btn btn-outline btn-sm" href="#" onclick="openModal('login')">Login</a>
+    <a class="btn btn-primary btn-sm" href="#" onclick="openModal('signup')">Sign Up Free</a>
+  </div>
+</nav>
+
+<!-- PAGE NAV TABS -->
+<div class="page-nav">
+  <a class="page-tab active" onclick="showSection('home')" href="#">🏠 Home</a>
+  <a class="page-tab" onclick="showSection('marketplace')" href="#">🛒 Marketplace</a>
+  <a class="page-tab" onclick="showSection('farmers')" href="#">👨‍🌾 Farmers</a>
+  <a class="page-tab" onclick="showSection('subscription')" href="#">📦 Subscriptions</a>
+  <a class="page-tab" onclick="showSection('about')" href="#">📖 Our Story</a>
+  <a class="page-tab" onclick="showSection('dashboard')" href="#">👤 Dashboard</a>
+  <a class="page-tab" onclick="showSection('investor')" href="#">📈 Investor View</a>
+</div>
+
+<!-- ═══════════════════════════ HOME ═══════════════════════════ -->
+<div class="page-section visible" id="section-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-pattern"></div>
+    <div class="hero-orbs">
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge"><span>🌱</span> Canada's First Indian Organic Marketplace</div>
+      <h1>
+        <em>Fresh</em> from the farm.<br>
+        Trusted by your family.
+      </h1>
+      <p>Premium certified organic fruits & vegetables, delivered to your door. Every item traced back to the farmer who grew it with love.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-gold btn-lg" href="#" onclick="showSection('marketplace')">Start Shopping ↗</a>
+        <a class="btn btn-lg" style="background:rgba(255,255,255,0.12);color:white;border:1.5px solid rgba(255,255,255,0.25)" href="#" onclick="showSection('farmers')">Meet Our Farmers →</a>
+      </div>
+    </div>
+    <div class="hero-trust">
+      <div class="hero-trust-item">
+        <div class="hero-trust-num">48+</div>
+        <div class="hero-trust-label">Certified Farmers</div>
+      </div>
+      <div class="hero-trust-item">
+        <div class="hero-trust-num">200+</div>
+        <div class="hero-trust-label">Organic Products</div>
+      </div>
+      <div class="hero-trust-item">
+        <div class="hero-trust-num">5,000+</div>
+        <div class="hero-trust-label">Happy Families</div>
+      </div>
+      <div class="hero-trust-item">
+        <div class="hero-trust-num">4.9★</div>
+        <div class="hero-trust-label">Average Rating</div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-emoji">🥭</div>
+        <div class="hero-card-title">Alphonso Mangoes — Peak Season</div>
+        <div class="hero-card-sub">Direct from Punjab farms. Harvested this week.</div>
+        <div class="hero-card-tag">🔍 QR Traceable</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-emoji">🌿</div>
+        <div class="hero-card-title">Certified Organic</div>
+        <div class="hero-card-sub">100% USDA & CanadaGAP certified</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-emoji">🚀</div>
+        <div class="hero-card-title">Next-Day Delivery</div>
+        <div class="hero-card-sub">Toronto · Vancouver · Calgary</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAROUSEL -->
+  <section class="carousel-section">
+    <div class="carousel-header">
+      <div class="section-tag">Fresh This Week</div>
+      <h2 class="section-title">Seasonal <em>picks</em> you'll love</h2>
+    </div>
+    <div style="overflow:hidden;">
+      <div class="carousel-track" id="carouselTrack">
+        <!-- Items duplicated for infinite scroll -->
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST / QR -->
+  <section class="trust-section">
+    <div class="section-tag">Radical Transparency</div>
+    <h2 class="section-title">Scan. Know. <em>Trust.</em></h2>
+    <p class="section-sub">Every product carries a QR code revealing the exact farm, harvest date, and certification — because you deserve to know exactly what you're eating.</p>
+    <div class="trust-grid">
+      <div class="trust-visual">
+        <div class="qr-demo">📱</div>
+        <div style="font-weight:700;font-size:18px;color:var(--green-deep);margin-bottom:20px;">Alphonso Mangoes — Batch #KF2024-041</div>
+        <div class="trust-info-row"><span class="trust-info-label">🧑‍🌾 Farmer</span><span class="trust-info-val">Rajinder Singh Gill</span></div>
+        <div class="trust-info-row"><span class="trust-info-label">📍 Farm Location</span><span class="trust-info-val">Kapurthala, Punjab</span></div>
+        <div class="trust-info-row"><span class="trust-info-label">📅 Harvest Date</span><span class="trust-info-val">June 14, 2025</span></div>
+        <div class="trust-info-row"><span class="trust-info-label">🌿 Certification</span><span class="trust-info-val">USDA Organic ✓</span></div>
+        <div class="trust-info-row"><span class="trust-info-label">🧪 Pesticides</span><span class="trust-info-val">None detected</span></div>
+        <div class="trust-info-row"><span class="trust-info-label">⏱ Farm to Door</span><span class="trust-info-val">38 hours</span></div>
+      </div>
+      <div class="trust-features">
+        <div class="trust-feature">
+          <div class="trust-feature-icon">🔍</div>
+          <div>
+            <h4>QR Traceability</h4>
+            <p>Every product has a unique QR code. Scan it to instantly see where, when, and how your food was grown — in real time.</p>
+          </div>
+        </div>
+        <div class="trust-feature">
+          <div class="trust-feature-icon">📜</div>
+          <div>
+            <h4>Certification Verified</h4>
+            <p>We partner only with USDA Organic and CanadaGAP certified farmers. Certificates are publicly viewable for every product.</p>
+          </div>
+        </div>
+        <div class="trust-feature">
+          <div class="trust-feature-icon">🤝</div>
+          <div>
+            <h4>Direct Farmer Partnerships</h4>
+            <p>No middlemen. We work directly with 48+ farming families, ensuring fair prices for them and the freshest produce for you.</p>
+          </div>
+        </div>
+        <div class="trust-feature">
+          <div class="trust-feature-icon">🧠</div>
+          <div>
+            <h4>AI Recommendations</h4>
+            <p>Our smart system learns your family's preferences, dietary needs, and favourite Indian staples to curate a personalised weekly shop.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section">
+    <div class="section-tag">Community Stories</div>
+    <h2 class="section-title">Families who <em>trust us</em></h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"I finally found karela and methi that actually taste like home. Scanning the QR and seeing the farmer's face — that's when I knew this was different."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">👩</div>
+          <div>
+            <div class="testimonial-name">Priya Sharma</div>
+            <div class="testimonial-location">Toronto, ON · Subscriber since 2023</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"My kids now eat more vegetables because they're excited to scan the QR codes and 'meet the farmer.' Kenmac made healthy eating fun for the whole family."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">👨</div>
+          <div>
+            <div class="testimonial-name">Amandeep Brar</div>
+            <div class="testimonial-location">Vancouver, BC · Family Box Subscriber</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"As someone managing diabetes, knowing my produce is pesticide-free and truly organic gives me actual peace of mind. The quality is extraordinary."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">👵</div>
+          <div>
+            <div class="testimonial-name">Sunita Patel</div>
+            <div class="testimonial-location">Calgary, AB · Monthly Box Member</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBSCRIPTION PREVIEW -->
+  <section class="subscription-section" id="section-subscription-home">
+    <div class="section-tag">Subscription Boxes</div>
+    <h2 class="section-title">Your weekly <em>harvest box</em></h2>
+    <p class="section-sub">Curated weekly boxes of seasonal organic produce, tailored to your family's Indian cooking traditions. Skip, pause, or customise anytime.</p>
+    <div class="subscription-grid">
+      <div class="sub-card">
+        <div class="sub-icon">🌿</div>
+        <div class="sub-name">Starter Box</div>
+        <div class="sub-price">$39<span>/week</span></div>
+        <div class="sub-desc">Perfect for individuals or couples who want to start their organic journey.</div>
+        <ul class="sub-features">
+          <li>8–10 seasonal items</li>
+          <li>4 Indian staples always included</li>
+          <li>QR traceability on all items</li>
+          <li>Skip or pause anytime</li>
+        </ul>
+        <a class="btn btn-primary" href="#" onclick="openModal('signup')">Choose Starter</a>
+      </div>
+      <div class="sub-card featured">
+        <div class="featured-badge">⭐ Most Popular</div>
+        <div class="sub-icon">🥗</div>
+        <div class="sub-name">Family Box</div>
+        <div class="sub-price">$69<span>/week</span></div>
+        <div class="sub-desc">Designed for families of 4, built around traditional Indian meal planning.</div>
+        <ul class="sub-features">
+          <li>16–20 seasonal items</li>
+          <li>Indian staples + seasonal specials</li>
+          <li>AI-curated to your preferences</li>
+          <li>Free delivery every week</li>
+          <li>Meet-the-farmer video with each box</li>
+        </ul>
+        <a class="btn btn-gold" href="#" onclick="openModal('signup')">Choose Family</a>
+      </div>
+      <div class="sub-card">
+        <div class="sub-icon">👑</div>
+        <div class="sub-name">Premium Box</div>
+        <div class="sub-price">$109<span>/week</span></div>
+        <div class="sub-desc">Exclusive heirloom varieties, rare Indian produce, and seasonal delicacies.</div>
+        <ul class="sub-features">
+          <li>20–28 curated items</li>
+          <li>Rare & heirloom varieties</li>
+          <li>Dedicated farmer relationship</li>
+          <li>Nutritionist-curated plan</li>
+          <li>Priority support & early access</li>
+        </ul>
+        <a class="btn btn-primary" href="#" onclick="openModal('signup')">Choose Premium</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER / SIGNUP CTA -->
+  <section class="signup-section">
+    <h2>Join <em>5,000+</em> Indian families across Canada</h2>
+    <p>Get your first box with 20% off. No commitment. Cancel anytime.</p>
+    <div class="signup-form">
+      <input type="email" class="signup-input" placeholder="Your email address">
+      <button class="btn btn-gold btn-lg" onclick="openModal('signup')">Get Started →</button>
+    </div>
+    <div class="signup-disclaimer">Free delivery on your first order. No credit card required to sign up.</div>
+  </section>
+
+</div><!-- end home section -->
+
+<!-- ═══════════════════════════ MARKETPLACE ═══════════════════════════ -->
+<div class="page-section" id="section-marketplace">
+  <section class="marketplace-section" style="min-height:80vh;">
+    <div class="section-tag">Marketplace</div>
+    <h2 class="section-title">Organic <em>produce</em>, every season</h2>
+    <p class="section-sub">Sourced directly from certified farmers. All prices include delivery. Filter by dietary need or your favourite Indian staples.</p>
+
+    <div class="filters-bar">
+      <span class="filter-pill active" onclick="setFilter(this)">All</span>
+      <span class="filter-pill" onclick="setFilter(this)">🌿 Organic Certified</span>
+      <span class="filter-pill" onclick="setFilter(this)">🍂 Seasonal</span>
+      <span class="filter-pill" onclick="setFilter(this)">🇮🇳 Indian Staples</span>
+      <span class="filter-pill" onclick="setFilter(this)">🥬 Leafy Greens</span>
+      <span class="filter-pill" onclick="setFilter(this)">🍎 Fruits</span>
+      <span class="filter-pill" onclick="setFilter(this)">🫛 Legumes & Lentils</span>
+      <span class="filter-pill" onclick="setFilter(this)">⚡ Ready in 24h</span>
+    </div>
+
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-card-img">🥭<div class="product-badge">Organic</div></div>
+        <div class="product-card-body">
+          <div class="product-card-name">Alphonso Mangoes</div>
+          <div class="product-card-farmer">👨‍🌾 Rajinder Singh · Punjab</div>
+          <div class="product-card-footer">
+            <div class="product-price">$12<span>/kg</span></div>
+            <button class="add-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-img">🫛<div class="product-badge">Seasonal</div></div>
+        <div class="product-card-body">
+          <div class="product-card-name">Okra (Bhindi)</div>
+          <div class="product-card-farmer">👩‍🌾 Gurpreet Kaur · Haryana</div>
+          <div class="product-card-footer">
+            <div class="product-price">$8<span>/500g</span></div>
+            <button class="add-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-img">🌿<div class="product-badge">Organic</div></div>
+        <div class="product-card-body">
+          <div class="product-card-name">Fresh Methi</div>
+          <div class="product-card-farmer">👨‍🌾 Baldev Dhaliwal · Rajasthan</div>
+          <div class="product-card-footer">
+            <div class="product-price">$6<span>/bunch</span></div>
+            <button class="add-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-img">🍆<div class="product-badge">Organic</div></div>
+        <div class="product-card-body">
+          <div class="product-card-name">Baby Brinjal (Baingan)</div>
+          <div class="product-card-farmer">👩‍🌾 Meena Patel · Gujarat</div>
+          <div class="product-card-footer">
+            <div class="product-price">$9<span>/kg</span></div>
+            <button class="add-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-img">🍋<div class="product-badge">Seasonal</div></div>
+        <div class="product-card-body">
+          <div class="product-card-name">Kaffir Limes</div>
+          <div class="product-card-farmer">👨‍🌾 Suresh Nair · Kerala</div>
+          <div class="product-card-footer">
+            <div class="product-price">$5<span>/6 pack</span></div>
+            <button class="add-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-img">🥬<div class="product-badge">Organic</div></div>
+        <div class="product-card-body">
+          <div class="product-card-name">Drumstick (Moringa)</div>
+          <div class="product-card-farmer">👨‍🌾 Arjun Reddy · Andhra Pradesh</div>
+          <div class="product-card-footer">
+            <div class="product-price">$11<span>/bunch</span></div>
+            <button class="add-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-img">🧅<div class="product-badge">Organic</div></div>
+        <div class="product-card-body">
+          <div class="product-card-name">Red Onions</div>
+          <div class="product-card-farmer">👩‍🌾 Radha Krishnamurthy · Karnataka</div>
+          <div class="product-card-footer">
+            <div class="product-price">$7<span>/2kg</span></div>
+            <button class="add-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-card-img">🥥<div class="product-badge">Seasonal</div></div>
+        <div class="product-card-body">
+          <div class="product-card-name">Fresh Coconuts</div>
+          <div class="product-card-farmer">👨‍🌾 Thomas George · Tamil Nadu</div>
+          <div class="product-card-footer">
+            <div class="product-price">$14<span>/4 pack</span></div>
+            <button class="add-btn" onclick="addToCart(this)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Cart Toast -->
+    <div id="cartToast" style="display:none;position:fixed;bottom:32px;right:32px;background:var(--green-deep);color:white;padding:16px 24px;border-radius:14px;font-weight:600;font-size:15px;z-index:999;box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+      ✓ Added to cart!
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════ FARMERS ═══════════════════════════ -->
+<div class="page-section" id="section-farmers">
+  <section class="farmers-section">
+    <div class="section-tag">Our Farming Community</div>
+    <h2 class="section-title">Meet the <em>hands</em> that feed you</h2>
+    <p class="section-sub">48 certified farming families across India. Each one verified, each one with a story worth knowing.</p>
+    <div class="farmers-grid">
+      <div class="farmer-card">
+        <div class="farmer-card-img">
+          👨‍🌾
+          <div class="farmer-video-btn">▶</div>
+        </div>
+        <div class="farmer-card-body">
+          <div class="farmer-card-name">Rajinder Singh Gill</div>
+          <div class="farmer-card-location">📍 Kapurthala, Punjab</div>
+          <div class="farmer-card-story">A third-generation farmer who converted to organic practices in 2015. Rajinder grows 12 varieties of mangoes and seasonal vegetables using ancient Punjabi composting techniques passed down from his grandfather.</div>
+          <div class="farmer-tags">
+            <span class="farmer-tag">🥭 Mangoes</span>
+            <span class="farmer-tag">🌿 Herbs</span>
+            <span class="farmer-tag">USDA Certified</span>
+          </div>
+        </div>
+      </div>
+      <div class="farmer-card">
+        <div class="farmer-card-img">
+          👩‍🌾
+          <div class="farmer-video-btn">▶</div>
+        </div>
+        <div class="farmer-card-body">
+          <div class="farmer-card-name">Gurpreet Kaur Sandhu</div>
+          <div class="farmer-card-location">📍 Hisar, Haryana</div>
+          <div class="farmer-card-story">One of the first women in her district to lead a 50-acre organic farm. Gurpreet specialises in leafy Indian vegetables — bhindi, karela, tinda — that taste exactly like home-cooked memories.</div>
+          <div class="farmer-tags">
+            <span class="farmer-tag">🫛 Bhindi</span>
+            <span class="farmer-tag">🥬 Greens</span>
+            <span class="farmer-tag">CanadaGAP</span>
+          </div>
+        </div>
+      </div>
+      <div class="farmer-card">
+        <div class="farmer-card-img">
+          🧑‍🌾
+          <div class="farmer-video-btn">▶</div>
+        </div>
+        <div class="farmer-card-body">
+          <div class="farmer-card-name">Arjun Venkat Reddy</div>
+          <div class="farmer-card-location">📍 Vijayawada, Andhra Pradesh</div>
+          <div class="farmer-card-story">Software engineer turned farmer, Arjun left a tech career in 2019 to revive his family's 80-acre farm. He now uses IoT sensors to monitor soil health and produces premium moringa, curry leaves, and tropical fruits.</div>
+          <div class="farmer-tags">
+            <span class="farmer-tag">🌿 Moringa</span>
+            <span class="farmer-tag">🍃 Curry Leaf</span>
+            <span class="farmer-tag">IoT Farm</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════ SUBSCRIPTION ═══════════════════════════ -->
+<div class="page-section" id="section-subscription">
+  <section class="subscription-section" style="min-height:80vh;">
+    <div class="section-tag">Subscription Boxes</div>
+    <h2 class="section-title">Your weekly <em>harvest</em>, curated</h2>
+    <p class="section-sub">Freshness on autopilot. Pause, skip, or customise your box any time — no lock-ins, just great produce.</p>
+    <div class="subscription-grid">
+      <div class="sub-card">
+        <div class="sub-icon">🌿</div>
+        <div class="sub-name">Starter Box</div>
+        <div class="sub-price">$39<span>/week</span></div>
+        <div class="sub-desc">Perfect for individuals or couples starting their organic journey.</div>
+        <ul class="sub-features">
+          <li>8–10 seasonal items</li>
+          <li>4 Indian staples always included</li>
+          <li>QR traceability on all items</li>
+          <li>Skip or pause anytime</li>
+        </ul>
+        <a class="btn btn-primary" href="#" onclick="openModal('signup')">Choose Starter</a>
+      </div>
+      <div class="sub-card featured">
+        <div class="featured-badge">⭐ Most Popular</div>
+        <div class="sub-icon">🥗</div>
+        <div class="sub-name">Family Box</div>
+        <div class="sub-price">$69<span>/week</span></div>
+        <div class="sub-desc">Designed for families of 4, built around traditional Indian meal planning.</div>
+        <ul class="sub-features">
+          <li>16–20 seasonal items</li>
+          <li>Indian staples + seasonal specials</li>
+          <li>AI-curated to your preferences</li>
+          <li>Free delivery every week</li>
+          <li>Meet-the-farmer video with each box</li>
+        </ul>
+        <a class="btn btn-gold" href="#" onclick="openModal('signup')">Choose Family</a>
+      </div>
+      <div class="sub-card">
+        <div class="sub-icon">👑</div>
+        <div class="sub-name">Premium Box</div>
+        <div class="sub-price">$109<span>/week</span></div>
+        <div class="sub-desc">Exclusive heirloom varieties and rare Indian produce.</div>
+        <ul class="sub-features">
+          <li>20–28 curated items</li>
+          <li>Rare & heirloom varieties</li>
+          <li>Dedicated farmer relationship</li>
+          <li>Nutritionist-curated plan</li>
+          <li>Priority support & early access</li>
+        </ul>
+        <a class="btn btn-primary" href="#" onclick="openModal('signup')">Choose Premium</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════ ABOUT ═══════════════════════════ -->
+<div class="page-section" id="section-about">
+  <section style="background:white;min-height:80vh;">
+    <div class="section-tag">Our Story</div>
+    <h2 class="section-title">Born from <em>longing</em> for home</h2>
+    <p class="section-sub">Kenmac Fruits was founded in 2023 by Kenneth and Mackenzie — a Canadian food technologist and an Indian agronomist — after they couldn't find produce in Toronto that tasted anything like the fresh, flavourful fruits and vegetables they'd grown up with.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:60px;">
+      <div>
+        <div style="font-size:80px;margin-bottom:24px;">🌱</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:28px;color:var(--green-deep);margin-bottom:16px;">The Problem We Saw</h3>
+        <p style="color:var(--muted);line-height:1.8;font-size:16px;">Over 1.4 million Indian-Canadians live with a constant disconnect: the produce at mainstream grocery stores lacks the flavour, authenticity, and trust of what they grew up eating. Pesticide use goes undisclosed. Farmers are invisible. And the Indian community — health-conscious and food-literate — deserves better.</p>
+      </div>
+      <div>
+        <div style="font-size:80px;margin-bottom:24px;">🤝</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:28px;color:var(--green-deep);margin-bottom:16px;">What We Built</h3>
+        <p style="color:var(--muted);line-height:1.8;font-size:16px;">A direct bridge between certified organic Indian farmers and diaspora families in Canada. Every product tells the farmer's story. Every purchase supports sustainable agriculture in India. And every bite tastes like the real thing — because it is.</p>
+      </div>
+    </div>
+    <div style="background:var(--green-deep);border-radius:28px;padding:60px;margin-top:60px;text-align:center;">
+      <div style="font-family:'Playfair Display',serif;font-size:36px;color:white;font-weight:700;font-style:italic;margin-bottom:16px;">"Know Your Farmer. Trust Your Food."</div>
+      <p style="color:rgba(255,255,255,0.65);font-size:17px;">This isn't just a tagline. It's our operating principle.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════ DASHBOARD ═══════════════════════════ -->
+<div class="page-section" id="section-dashboard">
+  <section style="background:var(--cream);min-height:80vh;">
+    <div class="section-tag">User Dashboard</div>
+    <h2 class="section-title">Welcome back, <em>Priya</em></h2>
+    <div class="dashboard-grid">
+      <div class="dashboard-sidebar">
+        <div style="font-family:'Playfair Display',serif;font-size:18px;color:white;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.1);">
+          👤 Priya Sharma<br>
+          <span style="font-family:'DM Sans',sans-serif;font-size:13px;color:rgba(255,255,255,0.5);font-weight:400;">Family Box Member</span>
+        </div>
+        <ul class="dashboard-sidebar-nav">
+          <li class="dash-nav-item active" onclick="setDashTab(this,'orders')">📦 My Orders</li>
+          <li class="dash-nav-item" onclick="setDashTab(this,'subscription')">🔄 Subscription</li>
+          <li class="dash-nav-item" onclick="setDashTab(this,'saved')">❤️ Saved Items</li>
+          <li class="dash-nav-item" onclick="setDashTab(this,'recommendations')">✨ For You</li>
+          <li class="dash-nav-item" onclick="setDashTab(this,'profile')">⚙️ Settings</li>
+        </ul>
+      </div>
+      <div class="dashboard-main" id="dashMain">
+        <div class="dash-header">
+          <h3>My Orders</h3>
+          <p>Your recent and upcoming deliveries</p>
+        </div>
+        <div class="dash-stat-row">
+          <div class="dash-stat"><div class="dash-stat-val">12</div><div class="dash-stat-label">Total Orders</div></div>
+          <div class="dash-stat"><div class="dash-stat-val">$487</div><div class="dash-stat-label">Total Spent</div></div>
+          <div class="dash-stat"><div class="dash-stat-val">4.9★</div><div class="dash-stat-label">Avg. Rating Given</div></div>
+        </div>
+        <div class="dash-order">
+          <div class="dash-order-icon">📦</div>
+          <div><div class="dash-order-name">Family Box — Week of June 17</div><div class="dash-order-date">Arriving Tuesday, June 18 · 16 items</div></div>
+          <div class="dash-order-status">On the way →</div>
+        </div>
+        <div class="dash-order">
+          <div class="dash-order-icon">✅</div>
+          <div><div class="dash-order-name">Family Box — Week of June 10</div><div class="dash-order-date">Delivered June 11 · 18 items</div></div>
+          <div class="dash-order-status" style="background:var(--green-light);">Delivered ✓</div>
+        </div>
+        <div class="dash-order">
+          <div class="dash-order-icon">🥭</div>
+          <div><div class="dash-order-name">Alphonso Mangoes — 2kg</div><div class="dash-order-date">Delivered June 5 · Single order</div></div>
+          <div class="dash-order-status" style="background:var(--green-light);">Delivered ✓</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════════════════ INVESTOR VIEW ═══════════════════════════ -->
+<div class="page-section" id="section-investor">
+  <section class="investor-section">
+    <div class="section-tag">Investor Brief</div>
+    <h2 class="section-title">Built for <em>scale.</em> Designed for trust.</h2>
+    <p class="section-sub">Why Kenmac Fruits is uniquely positioned to capture the underserved premium organic market across the Indian diaspora in Canada.</p>
+    <div class="investor-grid">
+      <div>
+        <div class="metric-cards">
+          <div class="metric-card"><div class="metric-card-num">$2.1B</div><div class="metric-card-label">Indian-Canadian addressable market (grocery spend)</div></div>
+          <div class="metric-card"><div class="metric-card-num">34%</div><div class="metric-card-label">YoY growth in organic food demand among South Asians</div></div>
+          <div class="metric-card"><div class="metric-card-num">$180</div><div class="metric-card-label">Average customer lifetime value (year 1)</div></div>
+          <div class="metric-card"><div class="metric-card-num">68%</div><div class="metric-card-label">Subscription retention rate at 6 months</div></div>
+          <div class="metric-card" style="grid-column:span 2;"><div class="metric-card-num">3.2×</div><div class="metric-card-label">Higher willingness-to-pay vs. mainstream organic among Indian diaspora (proprietary survey, n=400)</div></div>
+        </div>
+      </div>
+      <div class="investor-points">
+        <div class="investor-point">
+          <div class="investor-point-num">01</div>
+          <div>
+            <h4>Trust Moat via QR Traceability</h4>
+            <p>No competitor offers farm-to-door QR transparency. Our traceability system becomes a defensible brand asset — once consumers trust it, switching feels like a risk they won't take.</p>
+          </div>
+        </div>
+        <div class="investor-point">
+          <div class="investor-point-num">02</div>
+          <div>
+            <h4>Subscription-First Revenue Model</h4>
+            <p>65% of revenue is recurring subscription revenue — predictable, scalable, and high-margin. The subscription flywheel drives LTV beyond $300 by year 2.</p>
+          </div>
+        </div>
+        <div class="investor-point">
+          <div class="investor-point-num">03</div>
+          <div>
+            <h4>Cultural Specificity as a Moat</h4>
+            <p>By specialising in Indian staples with a culturally warm identity, we build community loyalty that generic players like Amazon Fresh cannot replicate authentically.</p>
+          </div>
+        </div>
+        <div class="investor-point">
+          <div class="investor-point-num">04</div>
+          <div>
+            <h4>Scalable to Full Diaspora Markets</h4>
+            <p>The same playbook replicates to the UK (1.8M Indian-Brits), USA (4.5M Indian-Americans), and Australia (600K). Kenmac is a platform, not just a grocery service.</p>
+          </div>
+        </div>
+        <div class="investor-point">
+          <div class="investor-point-num">05</div>
+          <div>
+            <h4>AI Layer Creates Data Advantage</h4>
+            <p>Every preference signal, purchase, and rating builds a proprietary dataset on Indian diaspora food behaviour — an asset that compounds over time and opens new verticals (recipes, meal kits, health coaching).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-brand">
+    <span class="nav-logo-text">🌿 Kenmac Fruits</span>
+    <p>Canada's first premium organic marketplace built for the Indian community. Know your farmer. Trust your food.</p>
+    <div style="margin-top:24px;display:flex;gap:12px;">
+      <a href="#" style="font-size:22px;text-decoration:none;">📘</a>
+      <a href="#" style="font-size:22px;text-decoration:none;">📸</a>
+      <a href="#" style="font-size:22px;text-decoration:none;">🐦</a>
+      <a href="#" style="font-size:22px;text-decoration:none;">▶️</a>
+    </div>
+  </div>
+  <div class="footer-col">
+    <h5>Shop</h5>
+    <ul class="footer-links">
+      <li><a href="#" onclick="showSection('marketplace')">Marketplace</a></li>
+      <li><a href="#" onclick="showSection('subscription')">Subscription Boxes</a></li>
+      <li><a href="#" onclick="showSection('farmers')">Our Farmers</a></li>
+      <li><a href="#">Gift Cards</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h5>Company</h5>
+    <ul class="footer-links">
+      <li><a href="#" onclick="showSection('about')">Our Story</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#" onclick="showSection('investor')">Investors</a></li>
+      <li><a href="#">Press</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h5>Support</h5>
+    <ul class="footer-links">
+      <li><a href="#">FAQ</a></li>
+      <li><a href="#">Track Your Order</a></li>
+      <li><a href="#">Contact Us</a></li>
+      <li><a href="#">Privacy Policy</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2025 Kenmac Fruits Inc. All rights reserved. Operating in Toronto · Vancouver · Calgary</p>
+  <div class="footer-certs">
+    <span class="cert-badge">USDA Organic</span>
+    <span class="cert-badge">CanadaGAP</span>
+    <span class="cert-badge">SSL Secured</span>
+  </div>
+</div>
+
+<!-- ─── MODALS ─── -->
+<div class="modal-overlay" id="modal-signup">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('signup')">✕</button>
+    <!-- Step 1: Create Account -->
+    <div class="modal-step active" id="signup-step1">
+      <h3>Join Kenmac Fruits 🌿</h3>
+      <p class="modal-sub">Create your account — it takes under a minute.</p>
+      <input class="modal-input" type="text" placeholder="Full name">
+      <input class="modal-input" type="email" placeholder="Email address">
+      <input class="modal-input" type="password" placeholder="Create a password">
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:12px;" onclick="nextSignupStep()">Create Account →</button>
+      <div class="modal-or">or</div>
+      <button class="google-btn" onclick="nextSignupStep()">🔵 Continue with Google</button>
+    </div>
+    <!-- Step 2: Preferences -->
+    <div class="modal-step" id="signup-step2">
+      <h3>Your Preferences 🥗</h3>
+      <p class="modal-sub">Help us personalise your experience. Select all that apply.</p>
+      <div style="font-weight:600;font-size:14px;color:var(--green-deep);margin-bottom:12px;">Dietary preferences:</div>
+      <div class="pref-tags">
+        <span class="pref-tag" onclick="togglePref(this)">🌿 Vegan</span>
+        <span class="pref-tag" onclick="togglePref(this)">🥛 Vegetarian</span>
+        <span class="pref-tag" onclick="togglePref(this)">🥗 Gluten-Free</span>
+        <span class="pref-tag" onclick="togglePref(this)">🫀 Low-Sodium</span>
+        <span class="pref-tag" onclick="togglePref(this)">🩸 Diabetic-Friendly</span>
+      </div>
+      <div style="font-weight:600;font-size:14px;color:var(--green-deep);margin:16px 0 12px;">Favourite produce:</div>
+      <div class="pref-tags">
+        <span class="pref-tag" onclick="togglePref(this)">🥭 Mangoes</span>
+        <span class="pref-tag" onclick="togglePref(this)">🫛 Bhindi</span>
+        <span class="pref-tag" onclick="togglePref(this)">🍆 Brinjal</span>
+        <span class="pref-tag" onclick="togglePref(this)">🌿 Methi</span>
+        <span class="pref-tag" onclick="togglePref(this)">🥬 Palak</span>
+        <span class="pref-tag" onclick="togglePref(this)">🥥 Coconut</span>
+        <span class="pref-tag" onclick="togglePref(this)">🧅 Onion</span>
+        <span class="pref-tag" onclick="togglePref(this)">🍋 Lemon</span>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px;" onclick="nextSignupStep()">Continue →</button>
+    </div>
+    <!-- Step 3: Success -->
+    <div class="modal-step" id="signup-step3">
+      <div class="success-state">
+        <div class="success-icon">🌱</div>
+        <h3 style="margin-bottom:12px;">Welcome to Kenmac!</h3>
+        <p style="color:var(--muted);line-height:1.7;margin-bottom:28px;">Your account is ready. We've personalised your marketplace based on your preferences. Your first box ships with <strong style="color:var(--green-mid);">20% off</strong>.</p>
+        <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;" onclick="closeModal('signup');showSection('marketplace')">Start Shopping 🛒</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-login">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('login')">✕</button>
+    <h3>Welcome back 🙏</h3>
+    <p class="modal-sub">Sign in to your Kenmac account.</p>
+    <input class="modal-input" type="email" placeholder="Email address">
+    <input class="modal-input" type="password" placeholder="Password">
+    <button class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:12px;" onclick="closeModal('login');showSection('dashboard')">Sign In →</button>
+    <div class="modal-or">or</div>
+    <button class="google-btn" onclick="closeModal('login');showSection('dashboard')">🔵 Continue with Google</button>
+    <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:20px;">New here? <a href="#" onclick="closeModal('login');openModal('signup')" style="color:var(--green-mid);font-weight:600;">Create a free account</a></p>
+  </div>
+</div>
+
+<script>
+  // Section navigation
+  function showSection(name) {
+    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('visible'));
+    const el = document.getElementById('section-' + name);
+    if (el) el.classList.add('visible');
+    document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.page-tab').forEach(t => {
+      if (t.textContent.toLowerCase().includes(name) || t.getAttribute('onclick')?.includes("'"+name+"'")) t.classList.add('active');
+    });
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    return false;
+  }
+
+  // Modal
+  function openModal(name) {
+    document.getElementById('modal-' + name).classList.add('open');
+    if (name === 'signup') { document.querySelectorAll('.modal-step').forEach(s => s.classList.remove('active')); document.getElementById('signup-step1').classList.add('active'); }
+    return false;
+  }
+  function closeModal(name) {
+    document.getElementById('modal-' + name).classList.remove('open');
+    return false;
+  }
+  document.querySelectorAll('.modal-overlay').forEach(m => m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); }));
+
+  // Signup steps
+  let signupStep = 1;
+  function nextSignupStep() {
+    signupStep++;
+    document.querySelectorAll('.modal-step').forEach(s => s.classList.remove('active'));
+    document.getElementById('signup-step' + signupStep)?.classList.add('active');
+  }
+
+  // Preferences toggle
+  function togglePref(el) { el.classList.toggle('selected'); }
+
+  // Filter pills
+  function setFilter(el) {
+    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // Add to cart
+  function addToCart(btn) {
+    const toast = document.getElementById('cartToast');
+    toast.style.display = 'block';
+    btn.textContent = '✓'; btn.style.background = 'var(--green-fresh)';
+    setTimeout(() => { toast.style.display = 'none'; }, 2200);
+  }
+
+  // Dashboard tabs
+  const dashContent = {
+    orders: { title: 'My Orders', sub: 'Your recent and upcoming deliveries', html: `
+      <div class="dash-stat-row">
+        <div class="dash-stat"><div class="dash-stat-val">12</div><div class="dash-stat-label">Total Orders</div></div>
+        <div class="dash-stat"><div class="dash-stat-val">$487</div><div class="dash-stat-label">Total Spent</div></div>
+        <div class="dash-stat"><div class="dash-stat-val">4.9★</div><div class="dash-stat-label">Avg. Rating Given</div></div>
+      </div>
+      <div class="dash-order"><div class="dash-order-icon">📦</div><div><div class="dash-order-name">Family Box — Week of June 17</div><div class="dash-order-date">Arriving Tuesday, June 18 · 16 items</div></div><div class="dash-order-status">On the way →</div></div>
+      <div class="dash-order"><div class="dash-order-icon">✅</div><div><div class="dash-order-name">Family Box — Week of June 10</div><div class="dash-order-date">Delivered June 11 · 18 items</div></div><div class="dash-order-status" style="background:var(--green-light);">Delivered ✓</div></div>
+    `},
+    subscription: { title: 'My Subscription', sub: 'Manage your weekly Family Box', html: `
+      <div style="background:white;border-radius:20px;padding:28px;border:1px solid var(--border);margin-bottom:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--green-deep);font-weight:700;">🥗 Family Box</div>
+          <span style="background:var(--green-light);color:var(--green-deep);padding:6px 16px;border-radius:100px;font-size:13px;font-weight:600;">Active ✓</span>
+        </div>
+        <div style="font-size:32px;font-weight:700;color:var(--green-mid);margin-bottom:8px;">$69<span style="font-size:16px;font-weight:400;color:var(--muted);">/week</span></div>
+        <div style="font-size:14px;color:var(--muted);margin-bottom:24px;">Next delivery: Tuesday, June 18 · 16 items planned</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <button class="btn btn-outline btn-sm">Customise Box</button>
+          <button class="btn btn-outline btn-sm">Skip This Week</button>
+          <button class="btn btn-outline btn-sm" style="color:var(--muted);">Pause Subscription</button>
+        </div>
+      </div>
+    `},
+    saved: { title: 'Saved Items', sub: 'Your favourite produce', html: `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        ${['🥭 Alphonso Mangoes · $12/kg','🫛 Bhindi · $8/500g','🌿 Methi · $6/bunch','🥥 Fresh Coconuts · $14/4 pack'].map(p => `<div style="background:white;border-radius:16px;padding:20px;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;"><span style="font-size:15px;font-weight:500;">${p}</span><button class="btn btn-primary btn-sm" onclick="addToCart(this)">+</button></div>`).join('')}
+      </div>
+    `},
+    recommendations: { title: 'Recommended For You', sub: 'AI-curated based on your preferences', html: `
+      <div style="background:linear-gradient(135deg,var(--green-deep),var(--green-mid));border-radius:20px;padding:24px;margin-bottom:20px;color:white;">
+        <div style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;opacity:0.7;margin-bottom:8px;">✨ AI Picks for You</div>
+        <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;">Based on your love of bhindi & mangoes, try these seasonal picks this week.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        ${['🍈 Tinda · In season · $7/kg','🌶 Green Chilli · Fresh batch · $5/250g','🥬 Palak · Rajinder\'s farm · $6/bunch','🫒 Raw Mango · Perfect for pickle · $9/kg'].map(p => `<div style="background:white;border-radius:16px;padding:20px;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;"><span style="font-size:14px;font-weight:500;">${p}</span><button class="btn btn-primary btn-sm" onclick="addToCart(this)">+</button></div>`).join('')}
+      </div>
+    `},
+    profile: { title: 'Account Settings', sub: 'Manage your profile and preferences', html: `
+      <div style="background:white;border-radius:20px;padding:28px;border:1px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:20px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border);">
+          <div style="width:64px;height:64px;border-radius:50%;background:var(--green-light);display:flex;align-items:center;justify-content:center;font-size:32px;">👩</div>
+          <div><div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--green-deep);">Priya Sharma</div><div style="font-size:14px;color:var(--muted);">priya@example.com · Toronto, ON</div></div>
+        </div>
+        <div style="font-weight:600;font-size:14px;color:var(--green-deep);margin-bottom:12px;">Dietary Preferences</div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;">
+          ${['🌿 Vegetarian','🥗 Gluten-Friendly','🩸 Diabetic-Friendly'].map(p => `<span style="padding:8px 16px;border-radius:100px;font-size:13px;background:var(--green-light);color:var(--green-deep);font-weight:500;">${p}</span>`).join('')}
+        </div>
+        <button class="btn btn-primary btn-sm">Save Changes</button>
+      </div>
+    `}
+  };
+
+  function setDashTab(el, tab) {
+    document.querySelectorAll('.dash-nav-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    const c = dashContent[tab];
+    document.getElementById('dashMain').innerHTML = `
+      <div class="dash-header"><h3>${c.title}</h3><p>${c.sub}</p></div>
+      ${c.html}
+      <div id="cartToast" style="display:none;position:fixed;bottom:32px;right:32px;background:var(--green-deep);color:white;padding:16px 24px;border-radius:14px;font-weight:600;font-size:15px;z-index:999;box-shadow:0 8px 32px rgba(0,0,0,0.2);">✓ Added to cart!</div>
+    `;
+  }
+
+  // Carousel
+  const carouselItems = [
+    { emoji:'🥭', name:'Alphonso Mango', origin:'Punjab, India', price:'$12/kg', bg:'#fff8ec' },
+    { emoji:'🫛', name:'Bhindi (Okra)', origin:'Haryana, India', price:'$8/500g', bg:'#f0faf4' },
+    { emoji:'🌿', name:'Fresh Methi', origin:'Rajasthan, India', price:'$6/bunch', bg:'#f4faf0' },
+    { emoji:'🍆', name:'Baby Brinjal', origin:'Gujarat, India', price:'$9/kg', bg:'#f8f0ff' },
+    { emoji:'🥥', name:'Fresh Coconut', origin:'Kerala, India', price:'$14/4pk', bg:'#fffdf0' },
+    { emoji:'🌶', name:'Green Chilli', origin:'Andhra Pradesh', price:'$5/250g', bg:'#fff0f0' },
+    { emoji:'🧅', name:'Red Onions', origin:'Karnataka, India', price:'$7/2kg', bg:'#fff5f5' },
+    { emoji:'🥬', name:'Fresh Palak', origin:'Punjab, India', price:'$6/bunch', bg:'#f0fff4' },
+    { emoji:'🫒', name:'Raw Mango', origin:'Maharashtra', price:'$9/kg', bg:'#fffdf0' },
+    { emoji:'🍋', name:'Kaffir Limes', origin:'Tamil Nadu', price:'$5/6pk', bg:'#fffef0' },
+  ];
+
+  function buildCarousel() {
+    const track = document.getElementById('carouselTrack');
+    const all = [...carouselItems, ...carouselItems]; // duplicate for infinite
+    track.innerHTML = all.map(i => `
+      <div class="carousel-item">
+        <div class="carousel-item-bg" style="background:${i.bg}">${i.emoji}</div>
+        <div class="carousel-item-cert">Organic ✓</div>
+        <div class="carousel-item-info">
+          <div class="carousel-item-name">${i.name}</div>
+          <div class="carousel-item-origin">${i.origin}</div>
+          <div class="carousel-item-price">${i.price}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+  buildCarousel();
+
+  // Prevent default on all internal links
+  document.querySelectorAll('a[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+</script>
+</body>
+</html>
